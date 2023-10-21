@@ -66,21 +66,16 @@ func onMessageSent(session *discordgo.Session, m *discordgo.MessageCreate) {
 		return
 	}
 
-	if m.GuildID == impactServer {
-		memberSanityCheck(author)
-		emojiMsg(msg)
-	}
-
 	// Unless we're being spoken to
 	if !triggeredManually(msg) {
 		// Don't talk where we're not welcome
-		whitelist := []string{general, help, bot, betterHelp, testing}
+		whitelist := []string{general, help, bots, dev}
 		if !includes(whitelist, msg.ChannelID) {
 			return
 		}
 
 		// Ignore messages from ‘know-it-all’s
-		if IsUserStaff(author) || hasRole(author, Stupid) {
+		if IsUserStaff(author) || hasRole(author, Ignored) {
 			return
 		}
 	}

@@ -31,11 +31,6 @@ func evalRatelimit(author string) bool {
 	until := ratelimit[author]
 	if until < time.Now().UnixNano() { // defaults to 0 so this works properly
 		rateLimitDuration := RateLimit
-		if author == "162848980647018496" {
-			// berrely is pee pee poo poo
-			rateLimitDuration = 2 * time.Hour
-			// can only tempmute every 2 hours instead of every 5 minutes
-		}
 		ratelimit[author] = time.Now().Add(rateLimitDuration).UnixNano()
 		return true
 	}
@@ -49,7 +44,7 @@ func resp(ch string, text string) error {
 		Color:       prettyembedcolor,
 		Description: text,
 		Footer: &discordgo.MessageEmbedFooter{
-			Text: "♿ Impact Client ♿",
+			Text: "Baritone",
 		},
 		Timestamp: time.Now().Format(time.RFC3339),
 	}
@@ -247,7 +242,7 @@ func muteHandler(caller *discordgo.Member, msg *discordgo.Message, args []string
 		return err
 	}
 
-	_ = resp(impactBotLog, providedReason)
+	_ = resp(bariBotLog, providedReason)
 
 	_ = resp(msg.ChannelID, providedReason)
 	return nil
@@ -382,7 +377,7 @@ func unmuteHandler(caller *discordgo.Member, msg *discordgo.Message, args []stri
 	}
 
 	// Respond in chat & #impactbot-log
-	_ = resp(impactBotLog, reply.String())
+	_ = resp(bariBotLog, reply.String())
 	_ = resp(msg.ChannelID, reply.String())
 
 	return nil
@@ -434,7 +429,7 @@ func rektHandler(caller *discordgo.Member, msg *discordgo.Message, args []string
 		return err
 	}
 
-	_ = resp(impactBotLog, providedReason)
+	_ = resp(bariBotLog, providedReason)
 
 	_ = resp(msg.ChannelID, providedReason)
 	return nil
@@ -513,7 +508,7 @@ func unmuteCallback() {
 		}
 
 		// Do the unmute
-		err = discord.GuildMemberRoleRemove(impactServer, discordId, muteRole)
+		err = discord.GuildMemberRoleRemove(baritoneServer, discordId, muteRole)
 		if err != nil {
 			fmt.Println("Could not remove mute role \""+muteRole+"\" from user \""+discordId+"\"", err)
 			message.WriteString("But the bot failed to unmute you! Please show this message to a moderator.\n")
@@ -541,7 +536,7 @@ func init() {
 }
 
 func onUserJoin2(s *discordgo.Session, m *discordgo.GuildMemberAdd) {
-	if m.GuildID != impactServer || m.User == nil {
+	if m.GuildID != baritoneServer || m.User == nil {
 		return
 	}
 	if DB == nil {
@@ -585,7 +580,7 @@ func onUserJoin2(s *discordgo.Session, m *discordgo.GuildMemberAdd) {
 		}
 
 		// Do the unmute
-		err = discord.GuildMemberRoleAdd(impactServer, m.User.ID, muteRole)
+		err = discord.GuildMemberRoleAdd(baritoneServer, m.User.ID, muteRole)
 		if err != nil {
 			fmt.Println("Could not remove mute role \""+muteRole+"\" from user \""+m.User.ID+"\"", err)
 		}

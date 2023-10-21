@@ -5,13 +5,13 @@ import (
 )
 
 func onVoiceStateUpdate(session *discordgo.Session, m *discordgo.VoiceStateUpdate) {
-	if m.GuildID != impactServer {
+	if m.GuildID != baritoneServer {
 		return
 	}
 	if m.ChannelID == "" || m.Deaf || m.SelfDeaf {
-		_ = session.GuildMemberRoleRemove(impactServer, m.UserID, InVoice.ID)
+		_ = session.GuildMemberRoleRemove(baritoneServer, m.UserID, Voice.ID)
 	} else {
-		_ = session.GuildMemberRoleAdd(impactServer, m.UserID, InVoice.ID)
+		_ = session.GuildMemberRoleAdd(baritoneServer, m.UserID, Voice.ID)
 	}
 }
 

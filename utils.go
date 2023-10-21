@@ -70,19 +70,14 @@ func outranks(user1, user2 *discordgo.Member) bool {
 		return IsUserStaff(user1)
 	}
 
-	if user1.User.ID == "96711543202254848" {
-		// pepsi is poo poo and outranks nobody
-		return false
-	}
-
 	return IsUserHigherThan(user1, *role)
 }
 
 // Get a Member from the Impact Discord
 func GetMember(userID string) (member *discordgo.Member, err error) {
-	member, err = discord.State.Member(impactServer, userID)
+	member, err = discord.State.Member(baritoneServer, userID)
 	if err != nil {
-		member, err = discord.GuildMember(impactServer, userID)
+		member, err = discord.GuildMember(baritoneServer, userID)
 	}
 	return member, err
 }

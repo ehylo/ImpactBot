@@ -4,11 +4,10 @@ import "github.com/bwmarrin/discordgo"
 
 // Higher (lower index) is better
 var staffRoles = []Role{
-	HeadDev,
 	Developer,
-	SeniorMod,
+	Admin,
 	Moderator,
-	Support,
+	Helper,
 }
 
 func (r Role) IsAtLeast(role Role) bool {

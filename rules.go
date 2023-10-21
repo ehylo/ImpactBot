@@ -3,17 +3,18 @@ package main
 import (
 	"errors"
 	"fmt"
-	stripmd "github.com/writeas/go-strip-markdown"
 	"log"
 	"regexp"
 	"strconv"
 	"strings"
 
+	stripmd "github.com/writeas/go-strip-markdown"
+
 	"github.com/bwmarrin/discordgo"
 )
 
-const rulesChannel = "667494326372139008"
-const rulesMessage = "667497572264312832"
+const rulesChannel = "826950651711979533"
+const rulesMessage = "826961121432698930"
 
 var rules = []string{
 	"Follow [Discord's ToS](https://discord.com/terms).",

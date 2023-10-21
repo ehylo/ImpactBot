@@ -55,7 +55,7 @@ func onMessageSent2(session *discordgo.Session, m *discordgo.MessageCreate) {
 			Text: "from @" + msg.Author.Username + "#" + msg.Author.Discriminator,
 		},
 	}
-	_, err := session.ChannelMessageSendEmbed(impactBotLog, embed)
+	_, err := session.ChannelMessageSendEmbed(bariBotLog, embed)
 	if err != nil {
 		log.Println(err)
 	}
@@ -73,7 +73,7 @@ func onMessageSent2(session *discordgo.Session, m *discordgo.MessageCreate) {
 		}
 		time.Sleep(2 * time.Second)
 
-		_, err = discord.ChannelMessageSend(ch.ID, fmt.Sprintf("Hey, do you need some help? Checkout <#%s>!\n\nYour Discord User ID is `"+author+"`\n\n**Go to https://impactclient.net/discord.html?discord="+author+"** to verify your account and be able to talk on the server.", help))
+		_, err = discord.ChannelMessageSend(ch.ID, fmt.Sprintf("Hey, do you need some help? Checkout <#%s>!\n\nYour Discord User ID is `"+author+"`", help))
 		if err != nil {
 			log.Println(err)
 		}

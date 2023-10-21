@@ -37,7 +37,7 @@ var Commands = []Command{
 		Aliases:     []string{"tm"},
 		Description: "Mute someone temporarily, optionally from a specific channel",
 		Usage:       []string{"@user reason", "@user #channel reason", "#channel @user reason"},
-		RoleNeeded:  &Support,
+		RoleNeeded:  &Helper,
 		Handler:     muteHandler,
 	},
 	{
@@ -65,7 +65,7 @@ var Commands = []Command{
 	},
 	{
 		Name:        "ban",
-		Aliases:     []string{"rm"},
+		Aliases:     []string{"b"},
 		Description: "Ban someone from the server",
 		Usage:       []string{"@user reason"},
 		RoleNeeded:  &Moderator,
@@ -83,15 +83,6 @@ var Commands = []Command{
 		Handler: rulesHandler,
 	},
 	{
-		Name:        "want",
-		Description: "want a nick",
-		Usage: []string{
-			"<number>",
-		},
-		RoleNeeded: &Support,
-		Handler:    wantHandler,
-	},
-	{
 		Name:        "cringe",
 		Aliases:     []string{"c"},
 		Description: "Generates a random cringe image",
@@ -103,7 +94,7 @@ var Commands = []Command{
 		Aliases:     []string{"ac"},
 		Description: "Adds a cringe photo to the collection",
 		Usage:       []string{"", "url"},
-		RoleNeeded:  &Support,
+		RoleNeeded:  &Helper,
 		Handler:     handleAddCringe,
 	},
 	{
@@ -115,63 +106,24 @@ var Commands = []Command{
 		Handler:     handleDelCringe,
 	},
 	{
-		Name:        "genkey",
-		Aliases:     []string{"gk"},
-		Description: "Generates an Impact premium key",
-		Usage:       []string{"", "role [...roles]"},
-		RoleNeeded:  &SeniorMod,
-		Handler:     genkey,
+		Name:        "ignore",
+		Description: "The Baritone Bot will ignore you",
+		Usage:       []string{""},
+		Handler:     ignore,
 	},
 	{
-		Name:        "giveaway",
-		Description: "Gives you the giveaway role",
+		Name:        "unignore",
+		Description: "The Baritone bot will now stalk you",
 		Usage:       []string{""},
-		Handler:     giveaway,
-	},
-	{
-		Name:        "ungiveaway",
-		Description: "Removes the giveaway role",
-		Usage:       []string{""},
-		Handler:     ungiveaway,
-	},
-	{
-		Name:        "stupid",
-		Description: "makes you so stupid impcat bot will ignore you",
-		Usage:       []string{""},
-		Handler:     stupid,
-	},
-	{
-		Name:        "unstupid",
-		Description: "no more stupid",
-		Usage:       []string{""},
-		Handler:     unstupid,
-	},
-	{
-		Name:        "funny",
-		Aliases:     []string{"unfunny"},
-		Description: "didnt laugh",
-		Usage:       []string{""},
-		Handler:     handleFunny,
-	},
-	{
-		Name:        "chess",
-		Description: "chess mode! gives you chess role",
-		Usage:       []string{""},
-		Handler:     chess,
-	},
-	{
-		Name:        "unchess",
-		Description: "no more chess",
-		Usage:       []string{""},
-		Handler:     unchess,
+		Handler:     unignore,
 	},
 }
 
 func init() {
 	// Load prefix from the environment
-	prefix = os.Getenv("IMPACT_PREFIX")
+	prefix = os.Getenv("BARITONE_PREFIX")
 	if prefix == "" {
-		prefix = "i!"
+		prefix = "b?"
 	}
 	// Match case-insensitive & ignore whitespace around prefix
 	prefixPattern = regexp.MustCompile(`(?i)^\s*` + regexp.QuoteMeta(prefix) + `\s*`)
@@ -185,7 +137,7 @@ func onMessageSentCommandHandler(session *discordgo.Session, m *discordgo.Messag
 	if msg == nil || msg.Author == nil || msg.Type != discordgo.MessageTypeDefault || msg.Author.ID == myselfID {
 		return // wtf
 	}
-	if msg.GuildID != impactServer && msg.GuildID != "" {
+	if msg.GuildID != baritoneServer && msg.GuildID != "" {
 		return // Only allow guild messages and DMs
 	}
 
@@ -249,7 +201,7 @@ var helpCommand = Command{
 		all := len(args) == 2 && strings.ToLower(args[1]) == "all"
 		if len(args) < 2 || all {
 			// All commands
-			embed.Title = "ImpactBot help"
+			embed.Title = "BaritoneBot help"
 			embed.Description = "Available commands:"
 			if all {
 				embed.Description = "All commands:"

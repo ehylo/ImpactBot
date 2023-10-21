@@ -44,7 +44,6 @@ func init() {
 	myselfID = user.ID
 	log.Println("I am", myselfID)
 
-	discord.AddHandler(onUserJoin)
 	discord.AddHandler(onMessageSent)
 	discord.AddHandler(onMessageReactedTo)
 	discord.AddHandler(onReady)
@@ -53,9 +52,6 @@ func init() {
 	discord.AddHandler(onUserJoin2)
 	discord.AddHandler(onVoiceStateUpdate)
 	discord.AddHandler(onUserJoin3)
-	discord.AddHandler(onReady2)
-	discord.AddHandler(onGuildMemberUpdate)
-	discord.AddHandler(onMessageEdited)
 }
 
 func main() {
@@ -72,7 +68,7 @@ func onReady(discord *discordgo.Session, ready *discordgo.Ready) {
 	err := discord.UpdateStatusComplex(discordgo.UpdateStatusData{
 		IdleSince: nil,
 		Activities: []*discordgo.Activity{{
-			Name: "the Impact Discord",
+			Name: "the Baritone Discord",
 			Type: 3,
 		}},
 		AFK:    false,
@@ -83,7 +79,7 @@ func onReady(discord *discordgo.Session, ready *discordgo.Ready) {
 		log.Println(err)
 	}
 	servers := discord.State.Guilds
-	log.Printf("Impcat bot has started on %d servers:", len(servers))
+	log.Printf("Baritone bot has started on %d servers:", len(servers))
 	for _, guild := range servers {
 		log.Println("Server ID", guild.ID)
 		fullGuild, err := discord.Guild(guild.ID)

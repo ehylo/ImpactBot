@@ -28,12 +28,6 @@ func handleCringe(_ *discordgo.Member, msg *discordgo.Message, _ []string) error
 }
 
 func handleAddCringe(caller *discordgo.Member, msg *discordgo.Message, args []string) error {
-	if caller.User.ID == "488400748296667147" {
-		return fmt.Errorf("cringe vini does not get to add cringe because cringe vini himself is cringe")
-	}
-	if caller.User.ID == "162848980647018496" {
-		return fmt.Errorf("berrely is too cringe to add cringe")
-	}
 
 	if len(args) < 2 {
 		if len(msg.Attachments) > 0 {
@@ -80,8 +74,5 @@ func cringe(url string, channelID string, messageID string) error {
 }
 
 func cringeReact(channelID string, messageID string) {
-	_ = discord.MessageReactionAdd(channelID, messageID, "why_steve_a_pig:558474255776481291")
-	_ = discord.MessageReactionAdd(channelID, messageID, "im_stuff:558474787031351339")
-	_ = discord.MessageReactionAdd(channelID, messageID, "alex_omg_no:558475172022059009")
-	_ = discord.MessageReactionAdd(channelID, messageID, "steve_your_sister_is_awesome:558475291454996510")
+	_ = discord.MessageReactionAdd(channelID, messageID, "troll_crazy:826958873280774195")
 }
